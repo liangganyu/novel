@@ -7,32 +7,40 @@ public class Test4 {
         Scanner sc = new Scanner(System.in);
         ArrayList<List<Integer>> lists = new ArrayList<List<Integer>>();
         ArrayList<Integer> list = new ArrayList<>();
-        System.out.print("请输入一串数字：");
-        List<String> listone = Arrays.asList(sc.next().split(","));
-        for (String s : listone) {
-            list.add(Integer.valueOf(s));
-        }
-        System.out.println("你输入的集合为：" + list);
-        HashMap<String, List<Integer>> map = getMap();
+
+        while (true) {
+            System.out.print("请输入一串数字：");
+            List<String> listone = Arrays.asList(sc.next().split(","));
+            for (String s : listone) {
+                list.add(Integer.valueOf(s));
+            }
+            System.out.println("你输入的集合为：" + list);
+            HashMap<String, List<Integer>> map = getMap();
 //        System.out.println("============================");
 //        System.out.println("生成的5个不同的不包含上面元素的随机集合为：");
-        for (int i = 0; i < 10000; i++) {
-            lists.add(getList(list));
-        }
-        //System.out.println(lists);
-        System.out.println("===========================");
-        //统计lists集合中每个元素的个数并返回最多元素的前10位的list
-        List<Integer> integers = doList(lists);
-        System.out.println("预测最可能出现的为：");
-        Set<Map.Entry<String, List<Integer>>> entries = map.entrySet();
-        for (Map.Entry<String, List<Integer>> entry : entries) {
-            List<Integer> value = entry.getValue();
-            for (Integer integer : integers) {
-                if (value.contains(integer)) {
-                    //输入处理数字后的结果
-                    System.out.print("  " + entry.getKey());
+            for (int i = 0; i < 10000; i++) {
+                lists.add(getList(list));
+            }
+            System.out.println("===========================");
+            //统计lists集合中每个元素的个数并返回最多元素的前5位的list
+            List<Integer> integers = doList(lists);
+            System.out.println("预测最可能出现的为：");
+            Set<Map.Entry<String, List<Integer>>> entries = map.entrySet();
+            for (Map.Entry<String, List<Integer>> entry : entries) {
+                List<Integer> value = entry.getValue();
+                for (Integer integer : integers) {
+                    if (value.contains(integer)) {
+                        //输入处理数字后的结果
+                        System.out.print("  " + entry.getKey()+integer);
+                    }
                 }
             }
+            list.clear();
+            lists.clear();
+            integers.clear();
+            System.out.println();
+            System.out.println("=======================");
+
         }
 
     }
@@ -65,7 +73,7 @@ public class Test4 {
         //遍历获得排序后的结果
         for (Map.Entry<Integer, Integer> entry : entries) {
             list.add(entry.getKey());
-            if (list.size() == 5) {
+            if (list.size() == 10) {
                 break;
             }
         }
